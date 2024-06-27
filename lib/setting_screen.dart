@@ -15,7 +15,6 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _myBox = Hive.box('mybox');
   }
@@ -45,7 +44,7 @@ class _SettingScreenState extends State<SettingScreen> {
             TextButton(
                 onPressed: () {
                   _myBox.delete('pin');
-                  Get.offAll(() => PinCodeWidget());
+                  Get.offAll(() => const PinCodeWidget());
                 },
                 style: TextButton.styleFrom(foregroundColor: Colors.black),
                 child: Row(

@@ -22,12 +22,12 @@ class _EditNoteState extends State<EditNote> {
     bodyController.text = widget.data['body'];
   }
 
-  editNote({id, title, body, created_at, updated_ad}) {
+  editNote({id, title, body, created_at, updated_at}) {
     _notes.put(id, {
       'title': title,
       'body': body,
       'created_at': created_at,
-      'updated_at': updated_ad,
+      'updated_at': updated_at,
     });
   }
 
@@ -59,13 +59,13 @@ class _EditNoteState extends State<EditNote> {
               if (titleController.text != '') {
                 var now = DateTime.now();
                 var dateFormat = DateFormat('dd/MM/yy kk:mm').format(now);
-                print("panjang body ${bodyController.text.length}");
+                // print("panjang body ${bodyController.text.length}");
                 editNote(
                     id: widget.data['id'],
                     title: titleController.text,
                     body: bodyController.text,
                     created_at: widget.data['created_at'],
-                    updated_ad: dateFormat);
+                    updated_at: dateFormat);
                 VxToast.show(context, msg: 'Note Updated');
                 Get.offAll(() => const NotesScreen());
               } else {
@@ -82,7 +82,14 @@ class _EditNoteState extends State<EditNote> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                "Created: ${widget.data['created_at']}".text.make(),
+                "Updated: ${widget.data['updated_at']}".text.make(),
+              ],),
               'Title'.text.size(20).fontWeight(FontWeight.w600).black.make(),
+              
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
                 child: TextFormField(

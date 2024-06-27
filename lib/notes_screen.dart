@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -17,7 +16,6 @@ class NotesScreen extends StatefulWidget {
 class _NotesScreenState extends State<NotesScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _notes = Hive.box('notes');
   }
@@ -37,17 +35,6 @@ class _NotesScreenState extends State<NotesScreen> {
     return data;
     // print(data);
     // VxToast.show(context, msg: data.toString());
-  }
-
-  saveNotes({title, body, created_at, updated_ad}) {
-    _notes.add({
-      'title': title,
-      'body': body,
-      'created_at': created_at,
-      'updated_at': updated_ad,
-    });
-
-    VxToast.show(context, msg: "Note Created");
   }
 
   var _notes;
@@ -71,7 +58,7 @@ class _NotesScreenState extends State<NotesScreen> {
               onPressed: () {
                 Get.to(() => const SettingScreen());
               },
-              icon: Icon(Icons.settings)),
+              icon: const Icon(Icons.settings)),
         ],
       ),
       floatingActionButton: Padding(
@@ -87,64 +74,66 @@ class _NotesScreenState extends State<NotesScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-            children: List.generate(
-          (data.length / 2).round(),
-          (row) => Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(2, (col) {
-              var index = row * 2 + col;
-              // print(data.length);
-
-              if (index < data.length) {
-                var note = data[index];
-                print(note);
-                return Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      //     border: Border.all(
-                      //   color: Colors.black,
-                      // ),
-                      borderRadius: const BorderRadius.all(Radius.circular(5))),
-                  height: 100,
-                  width: MediaQuery.of(context).size.width / 2.15,
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          note['title'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
+        child: SingleChildScrollView(
+          child: Column(
+              children: List.generate(
+            (data.length / 2).round(),
+            (row) => Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(2, (col) {
+                var index = row * 2 + col;
+                // print(data.length);
+          
+                if (index < data.length) {
+                  var note = data[index];
+                  // print(note);
+                  return Container(
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        //     border: Border.all(
+                        //   color: Colors.black,
+                        // ),
+                        borderRadius: BorderRadius.all(Radius.circular(5))),
+                    height: 100,
+                    width: MediaQuery.of(context).size.width / 2.15,
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            note['title'],
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        Text(
-                          note['body'],
-                          maxLines: 2,
-                        ),
-                        note['updated_at']
-                            .toString()
-                            .text
-                            .color(Colors.grey[400])
-                            .make(),
-                      ],
+                          Text(
+                            note['body'],
+                            maxLines: 2,
+                          ),
+                          note['updated_at']
+                              .toString()
+                              .text
+                              .color(Colors.grey[400])
+                              .make(),
+                        ],
+                      ),
                     ),
-                  ),
-                ).onTap(() {
-                  Get.to(() => EditNote(
-                        data: note,
-                      ));
-                });
-              } else {
-                return Container();
-              }
-            }),
-          ),
-        )),
+                  ).onTap(() {
+                    Get.to(() => EditNote(
+                          data: note,
+                        ));
+                  });
+                } else {
+                  return Container();
+                }
+              }),
+            ),
+          )),
+        ),
       ),
     );
   }

@@ -16,7 +16,6 @@ class AddNote extends StatefulWidget {
 class _AddNoteState extends State<AddNote> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _notes = Hive.box('notes');
   }
@@ -102,18 +101,6 @@ class _AddNoteState extends State<AddNote> {
                   ),
                 ),
               ),
-              5.heightBox,
-              // TextButton(
-              //     onPressed: () {
-              //       saveNotes(
-              //           title: titleController.text,
-              //           body: bodyController.text,
-              //           created_at: dateFormat,
-              //           updated_ad: dateFormat);
-          
-              //       Get.offAll(() => const NotesScreen());
-              //     },
-              //     child: 'Add'.text.size(20.0).color(Colors.black).make()),
             ],
           ),
         ),
